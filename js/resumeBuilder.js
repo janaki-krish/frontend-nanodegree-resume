@@ -20,7 +20,7 @@ This is empty on purpose! Your code to build the resume will go here.
  		var formattedName = HTMLheaderName.replace("%data%", bio.name);
 		var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
 		var formattedImage = HTMLbioPic.replace("%data%", bio.picture);
-		//var formattedWelcomeMsg = HTMLWelcomeMsg.replace("%data%", "Hi");
+		var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomemessage);
 
 		var formattedContactInfo = [];
 		formattedContactInfo.push(HTMLmobile.replace("%data%", bio.contacts.mobile));
@@ -31,13 +31,13 @@ This is empty on purpose! Your code to build the resume will go here.
 		 $("#header").prepend(formattedRole);
 		 $("#header").prepend(formattedName);
 		 $("#header").append(formattedImage);
-		 //$("#header").append(formattedWelcomeMsg);
+		 $("#header").append(formattedWelcomeMsg);
 
 		 if (bio.skills.length > 0)
 		 {
 			$("#header").append(HTMLskillsStart);
 
-			for (i in bio.skills)
+			for (var i in bio.skills)
 			{
 				$("#skills").append(HTMLskills.replace("%data%", bio.skills[i]));
 			}
@@ -76,10 +76,30 @@ This is empty on purpose! Your code to build the resume will go here.
 		}
 	],
 
+	"onlineclass" :
+	[
+		{
+			title: "The Complete Web Developer Course",
+			URL: "https://www.udemy.com/the-complete-web-developer-course-2/learn/v4/overview"
+		},
+		{
+			title: "GitHub Guides",
+			URL: "https://guides.github.com/"
+		},
+		{
+			title: "Grunt",
+			URL: "https://gruntjs.com/"
+		},
+		{
+			title: "Udacity FrontEnd NanoDegree",
+			URL: "https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001"
+		}
+	],
+
 	display : function() {
 		if (education.schools.length > 0)
 		{
-			for (edu in education.schools)
+			for (var edu in education.schools)
 			{
 				$("#education").append(HTMLschoolStart);
 				var school = HTMLschoolName.replace("%data%", education.schools[edu].school) +
@@ -90,8 +110,22 @@ This is empty on purpose! Your code to build the resume will go here.
 				$(".education-entry:last").append(degree);
 			}
 		}
+
+		if (education.onlineclass.length > 0)
+		{
+			$("#education").append(HTMLonlineClasses);
+			for (var oclass in education.onlineclass)
+			{
+				$("#education").append(HTMLschoolStart);
+				var formattedTitle = HTMLonlineTitle.replace("%data%", education.onlineclass[oclass].title);
+				var formattedURL = HTMLonlineURL.replace("%data%", education.onlineclass[oclass].URL);
+
+				$(".education-entry:last").append(formattedTitle);
+				$(".education-entry:last").append(formattedURL);
+			}
+		}
 	}
-}
+};
 
 
  var workobject = {
@@ -112,7 +146,7 @@ This is empty on purpose! Your code to build the resume will go here.
  			"datesWorked" : "2011-2013",
  			"description" : "As part of this role, I had the responsibility of the people, project/product and various " +
  								"process implementations. End to end product development right from end user needs identification till" +
- 								"product release and support involvement as a team. Also responsible for new processes identification and implementation"
+ 								" product release and support involvement as a team. Also responsible for new processes identification and implementation"
  		},
 
  		{
@@ -152,7 +186,7 @@ This is empty on purpose! Your code to build the resume will go here.
 		{
 			$("#workExperience").append(HTMLworkStart);
 
-			for (job in workobject.jobs)
+			for (var job in workobject.jobs)
 			{
 				var formattedEmployer = HTMLworkEmployer.replace("%data%", workobject.jobs[job].employer) +
 												HTMLworkTitle.replace("%data%", workobject.jobs[job].title);
@@ -202,7 +236,7 @@ var projects = {
 		if (projects.projects.length > 0)
 		{
 			$("#projects").append(HTMLprojectStart);
-			for (project in projects.projects)
+			for (var project in projects.projects)
 			{
 				var formattedProjectTitle = HTMLprojectTitle.replace("%data%", projects.projects[project].title);
 				var formattedProjDates = HTMLprojectDates.replace("%data%", projects.projects[project].datesWorked);
@@ -213,51 +247,13 @@ var projects = {
 			}
 		}
 	}
-}
-
-var onlineClasses = {
-	onlineclass :
-	[
-		{
-			title: "The Complete Web Developer Course",
-			URL: "https://www.udemy.com/the-complete-web-developer-course-2/learn/v4/overview"
-		},
-		{
-			title: "GitHub Guides",
-			URL: "https://guides.github.com/"
-		},
-		{
-			title: "Grunt",
-			URL: "https://gruntjs.com/"
-		},
-		{
-			title: "Udacity FrontEnd NanoDegree",
-			URL: "https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001"
-		}
-	],
-
-	display: function() {
-		if (onlineClasses.onlineclass.length > 0)
-		{
-			$("#education").append(HTMLonlineClasses);
-			for (oclass in onlineClasses.onlineclass)
-			{
-				$("#education").append(HTMLschoolStart);
-				var formattedTitle = HTMLonlineTitle.replace("%data%", onlineClasses.onlineclass[oclass].title);
-				var formattedURL = HTMLonlineURL.replace("%data%", onlineClasses.onlineclass[oclass].URL);
-
-				$(".education-entry:last").append(formattedTitle);
-				$(".education-entry:last").append(formattedURL);
-			}
-		}
-	}
-}
+};
 
 
 bio.display();
 workobject.display();
 projects.display();
 education.display();
-onlineClasses.display();
+
 
 $("#mapDiv").append(googleMap);
